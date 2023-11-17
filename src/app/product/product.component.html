@@ -1,0 +1,125 @@
+  <h1>Sản Phẩm</h1>
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Thêm mới
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm mới sản phẩm</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+          <div class="mb-6">
+            <label  class="form-label">Tên SP</label>
+            <input  class="form-control" name="name"
+            #name="ngModel"
+            [(ngModel)]="product.name">
+          </div>
+          <div class="mb-6">
+            <label  class="form-label">Code</label>
+            <input  class="form-control" name="name"
+            #name="ngModel"
+            [(ngModel)]="product.code">
+          </div>
+          <div class="mb-6">
+            <label  class="form-label">Mô tả</label>
+            <input  class="form-control" name="description"
+            #description="ngModel"
+            [(ngModel)]="product.description"  >
+          </div>
+          <div class="mb-6">
+            <label  class="form-label">Giá</label>
+            <input type="number"  class="form-control" name="price"
+            #price="ngModel"
+            [(ngModel)]="product.price" >
+          </div>
+          <div class="mb-6">
+            <label  class="form-label">PriceNet</label>
+            <input type="number" class="form-control" name="priceNet"
+            #priceNet="ngModel"
+             [(ngModel)]="product.priceNet" >
+          </div>
+          <div class="mb-6">
+            <label  class="form-label">Select Image</label>
+            <input type="file" (change)="onFileSelected($event)" class="form-control" name="image">
+          </div>
+          <div class="mb-6">
+            <label  class="form-label">UrlImages</label>
+            <input type="text"  class="form-control" name="image"
+            #image="ngModel"
+            [(ngModel)]="product.UrlImage">
+            <h2>image</h2>
+            <img [src] = "[product.UrlImage]" alt="" height = "200px" width="200px">
+          </div>
+          <div class="mb-6">
+            <label  class="form-label">Số lượng</label>
+            <input type="number"  class="form-control" name="quantity"
+            #quantity="ngModel"
+            [(ngModel)]="product.quantity">
+          </div>
+          <div class="mb-6">
+            <label  class="form-label">Trạng thái</label>
+            <input type="number"  class="form-control"
+            name="status"
+            #status="ngModel"
+            [(ngModel)]="product.status">
+          </div>
+          <select class="form-select"name="cars" id="cars" [(ngModel)]="product.CategoryId">
+            <option *ngFor="let cate of categorys" [value]="cate.id">
+              {{cate.name}}
+            </option>
+          </select>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>PriceNet</th>
+        <th>Image</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pd of products">
+        <td>{{pd.name}}</td>
+        <td>{{pd.code}}</td>
+        <td>{{pd.description}}</td>
+        <td>{{pd.price}}</td>
+        <td>{{pd.priceNet}}</td>
+        <td><img style="height: 70px; margin: 0 auto;" [src]="pd.image"></td>
+        <td>{{pd.quantity}}</td>
+        <td>{{pd.status}}</td>
+        <td>
+          <button type="button"class="btn btn-primary">
+            Edit
+          </button>
+        </td>
+      </tr>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+<br>
+<!-- <input type="file" (change)="onFileSelected($event)" />
+ <input type="text" [(ngModel)]="public_id" placeholder="Enter image name" />
+<button (click)="upLoad()">Upload Image</button> -->
+

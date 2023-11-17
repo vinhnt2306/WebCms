@@ -1,0 +1,51 @@
+<div class="auth-form">
+  <div class="auth-form__container">
+    <div class="auth-form__header">
+      <h3 class="auth-form__heading">Đăng nhập</h3>
+      <a class="auth-form__switch-btn" href="register">Đăng ký</a>
+    </div>
+
+    <div class="auth-form__form">
+      <form (ngSubmit)="onSubmit()">
+        <div class="auth-form__group">
+          <input type="text" class="auth-form__input" placeholder="Email của bạn" id="username" name="username" [(ngModel)]="model.username" required>
+        </div>
+        <div class="auth-form__group">
+          <input type="password" class="auth-form__input" placeholder="Mật khẩu của bạn" id="password" name="password" [(ngModel)]="model.password" required>
+        </div>
+        <br>
+        <button class="btn btn-primary" type="submit">ĐĂNG NHẬP</button>
+        <div class="auth-form__aside">
+          <p class="auth-form__help">
+            <a href="" class="auth-form__help-link auth-form__help-link-forgot">Quên mật khẩu ?</a>
+          </p>
+        </div>
+
+        <div class="auth-form__controls">
+          <button class="btn btn-normal auth-form__controls-back">
+            <a href="#" class=""> TRỞ LẠI</a></button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<br>
+<!-- login.component.html -->
+<!-- <div class="container">
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+      <label for="username">Tên người dùng</label>
+      <input type="text" id="username" name="username" [(ngModel)]="model.username" required>
+  </div>
+  <div class="form-group">
+      <label for="password">Mật khẩu</label>
+      <input type="password" id="password" name="password" [(ngModel)]="model.password" required>
+  </div>
+  <button type="submit">Đăng nhập</button>
+</form>
+</div> -->
+
+
