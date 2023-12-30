@@ -2,11 +2,11 @@ export class  Product {
   "id" : string;
   "name": string;
   "code":string;
-  "price": number;
-  "quantity": number;
-  "status": number;
+  "price": number | null;
+  "quantity": number | null;
+  "status": number | null;
   "description": string;
-  "priceNet": number;
+  "priceNet": number | null;
   "UrlImage" : string;
   "image":string;
   "CategoryId": string;

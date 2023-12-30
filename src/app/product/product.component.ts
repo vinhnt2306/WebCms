@@ -1,4 +1,4 @@
-import { Component,Input ,OnInit } from '@angular/core';
+import { Component,Input ,OnInit,ElementRef, ViewChild } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { Product } from 'src/core/product';
 import { NgForm } from '@angular/forms';
@@ -11,6 +11,7 @@ import { CartegoryService } from '../service/cartegory.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
   //nhập product
   @Input()
   product : Product = new Product();
@@ -51,6 +52,7 @@ export class ProductComponent implements OnInit {
   onSubmit(){
     console.log(this.product);
     this.saveProduct();
+    this.clearFormData();
   }
   //chọn ảnh
   onFileSelected(event: any) {
@@ -75,8 +77,26 @@ export class ProductComponent implements OnInit {
     this.product.UrlImage = image
     console.log(image)
   }
-  getCategory(){
 
+  clearFormData() {
+    this.product = {
+      id : '',
+      name: '',
+      code:'',
+      price: null,
+      quantity: null,
+      status: null,
+      description: '',
+      priceNet: null,
+      UrlImage : '',
+      image:'',
+      CategoryId: '',
+      token : '',
+      TypeImage: '',
+    };
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
   }
 
 }

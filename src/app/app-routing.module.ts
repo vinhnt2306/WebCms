@@ -3,12 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProductComponent } from './product/product.component';
 import { LoginComponent } from './login/login.component';
+import { Category } from 'src/core/category';
+import { CategoryComponent } from './category/category.component';
 
 const routes: Routes = [
   { path:'home', component: HomeComponent },
   { path:'login', component: LoginComponent },
   { path:'product', component: ProductComponent },
-  { path: '**', redirectTo: 'home'}
+  { path:'category', component: CategoryComponent },
+  { path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({

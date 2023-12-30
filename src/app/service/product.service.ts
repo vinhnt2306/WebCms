@@ -14,8 +14,8 @@ export class ProductService {
   //get product
   getListProduct(): Observable<any> {
     let data = {
-      name : "",
-      image : ""
+      "": "",
+
     }
     return this.httpClient.request('POST', `${this.baseURL}/api/HomePage/Process`, {
       body: data,

@@ -2,6 +2,6 @@ export class Category{
   "id": string;
   "name": string;
   "description": string;
-  "status": number;
+  "status": number|null;
   "image": string
 }

@@ -1,0 +1,69 @@
+<h1>Danh mục</h1>
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Thêm mới
+</button>
+<br>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm mới sản phẩm</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #form="ngForm">
+          <div class="container">
+              <div class="row">
+              </div>
+          </div>
+
+
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  <h1>Danh sách sản phẩm</h1>
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Id</th>
+        <th>Tên danh mục</th>
+        <th>Mô tả</th>
+        <th>Trạng thái</th>
+        <th>Ảnh</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ct of categorys">
+        <td>{{ct.id}}</td>
+        <td>{{ct.name}}</td>
+        <td>{{ct.description}}</td>
+        <td>{{ct.status}}</td>
+        <td><img style="height: 70px; margin: 0 auto; width: 70px;" [src]="ct.image"></td>
+        <td>
+          <button type="button"class="btn btn-primary">
+            Edit
+          </button>
+        </td>
+      </tr>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+<br>
+<!-- <input type="file" (change)="onFileSelected($event)" />
+ <input type="text" [(ngModel)]="public_id" placeholder="Enter image name" />
+<button (click)="upLoad()">Upload Image</button> -->
+
+
