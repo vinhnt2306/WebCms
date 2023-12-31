@@ -1,1 +1,89 @@
-<p>supplier works!</p>
+<h1>Nhà Cung Cấp</h1>
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onAdd()">
+  Thêm mới
+</button>
+<br>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{title}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+          <div class="container">
+              <div class="mb-6">
+                <label  class="form-label">Tên nhà cung cấp</label>
+                <input  class="form-control" name="name"
+                #name="ngModel"
+                [(ngModel)]="supplier.name">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Số điện thoại </label>
+                <input  class="form-control" name="sdt"
+                #name="ngModel"
+                [(ngModel)]="supplier.phoneNumber">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Địa Chỉ</label>
+                <input  class="form-control" name="adress"
+                #name="ngModel"
+                [(ngModel)]="supplier.adress">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Địa chỉ sản phẩm</label>
+                <input  class="form-control" name="provideProduct"
+                #name="ngModel"
+                [(ngModel)]="supplier.provideProducst">
+              </div>
+              <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  <h1>Danh sách sản phẩm</h1>
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Id</th>
+        <th>Tên nhà cung cấp</th>
+        <th>Số điện thoại</th>
+        <th>Địa chỉ</th>
+        <th>??</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sp of suppliers">
+        <td>{{sp.id}}</td>
+        <td>{{sp.name}}</td>
+        <td>{{sp.phoneNumber}}</td>
+        <td>{{sp.adress}}</td>
+        <td>{{sp.provideProducst}}</td>
+        <td>
+          <button type="button"class="btn btn-primary" (click)="onEdit(sp)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Edit
+          </button>
+        </td>
+      </tr>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+<br>
+<!-- <input type="file" (change)="onFileSelected($event)" />
+ <input type="text" [(ngModel)]="public_id" placeholder="Enter image name" />
+<button (click)="upLoad()">Upload Image</button> -->
+
+
+
