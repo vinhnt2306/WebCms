@@ -42,3 +42,7 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.PREPARE_GOODS {
+    color: red;
+}
