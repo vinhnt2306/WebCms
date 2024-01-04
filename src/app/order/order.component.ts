@@ -1,22 +1,44 @@
 import { Component } from '@angular/core';
 import { Order } from 'src/core/order';
 import { OrderServices } from '../service/order.service';
+type comboStatus = {
+  id: number,
+  value: string
+}
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
 })
+
+
 export class OrderComponent {
   constructor(
     public orderServices: OrderServices,
   ) { }
   order: Order = new Order();
-
+  comboStatus: comboStatus[] = [];
   lstOrder: Order[] = [];
   ngOnInit() {
     this.orderServices.getListOrder().subscribe((response: any) => {
       this.lstOrder = response.data.orders
     })
+  }
+  openMoup(status: number) {
+    this.genComboStatus(status)
+  }
+  genComboStatus = (status: number) => {
+    if (status == 1) {
+      this.comboStatus = [{
+        id: 2,
+        value: "Gửi hàng"
+      }, {
+        id: 3,
+        value: "Hủy đơn"
+      }]
+    }
+
+    return this.comboStatus;
   }
 
   GenStatus = (status: number): string => {
@@ -24,10 +46,10 @@ export class OrderComponent {
       case 1:
         return '<div >Đang chuẩn bị hàng</div>';
       case 2:
-        return '<div style="color: red;">Đang gửi hàng </div>';
+        return '<div>Đang gửi hàng </div>';
 
       case 3:
-        return '<div style="color: red;">Đã hủy đơn</div>';
+        return '<div>Đã hủy đơn</div>';
 
       case 4:
         return '<div>Trả hàng </div>';
