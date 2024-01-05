@@ -21,4 +21,5 @@ export class CategoryComponent {
   constructor(
     public categortService : CartegoryService
   ){}
+  onSubmit(){}
 }

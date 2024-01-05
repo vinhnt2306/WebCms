@@ -69,6 +69,7 @@ export class SupplierComponent implements OnInit {
     console.log(this.supplier)
     this.title ='Thêm nhà cung cấp';
   }
+  
   isDataChanged(): boolean {
     // So sánh dữ liệu hiện tại với dữ liệu ban đầu
     return JSON.stringify(this.selected) !== JSON.stringify(this.supplier);
