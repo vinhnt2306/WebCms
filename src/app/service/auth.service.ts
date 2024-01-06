@@ -18,12 +18,14 @@ export class AuthService {
         data => {
           // Lưu token vào bộ nhớ cục bộ
           localStorage.setItem('currentUser', JSON.stringify(data));
-          // Điều hướng người dùng sau khi đăng nhập thành công
-          this.router.navigate(['/page-admin']);
+          window.location.reload();
         },
         error => {
           // Xử lý lỗi đăng nhập
         }
       );
+    }
+    logout(): void {
+      localStorage.removeItem('currentUser');
     }
 }

@@ -11,7 +11,8 @@ export class CartegoryService {
   constructor(private httpClient:HttpClient) {}
 
   category : Category[] = [];
-  getCategory(): Observable<any> {
+
+  getListCategory(): Observable<any> {
     let data = {
 
     }
@@ -21,6 +22,15 @@ export class CartegoryService {
       responseType: 'json'
     })
   }
-
+  //tạo mới danh mục
+  createCategory(category : Category) : Observable<any>{
+    return this.httpClient.post(`${this.baseURL}/api/CreateCategory/Process`,{...category,
+      token : JSON.parse(localStorage.getItem('currentUser')??"").data.token,
+    });
+  }
+  upLoadImage(data: FormData) {
+    return this.httpClient.post(`https://api.cloudinary.com/v1_1/dnvuz3evz/image/upload`, data);
+  }
+  
 
 }

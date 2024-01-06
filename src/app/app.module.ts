@@ -12,6 +12,13 @@ import { OrderComponent } from './order/order.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
+import { OderFollowComponent } from './oder-follow/oder-follow.component';
+import { Vouncher } from 'src/core/vouncher';
+import { VouncherComponent } from './vouncher/vouncher.component';
+import { AccountComponent } from './account/account.component';
+import { CustomerComponent } from './customer/customer.component';
+import { GroupcustomerComponent } from './groupcustomer/groupcustomer.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +30,13 @@ import { MenuComponent } from './menu/menu.component';
     OrderComponent,
     VoucherComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    OderFollowComponent,
+    VouncherComponent,
+    AccountComponent,
+    CustomerComponent,
+    GroupcustomerComponent,
+    UserComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

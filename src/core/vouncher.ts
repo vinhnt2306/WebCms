@@ -1,4 +1,5 @@
 export class Vouncher{
+    "id":string;
     "name":string;
     "code":string;
     "discount":number|null;

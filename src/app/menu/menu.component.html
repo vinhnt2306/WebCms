@@ -15,9 +15,18 @@
       </ul>
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        <!-- Navbar Search -->
-        UL
-        <p>Hehe</p>
+        <li class="nav-item">
+          <div class="dropdown">
+            <a class="btn dropdown-toggle nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="isLoggedIn">
+              Chào {{userName}}
+            </a>
+            <div class="dropdown-menu" *ngIf="isLoggedIn" aria-labelledby="dropdownMenuButton">
+              <a [routerLink]="['/profile/profile-user']" class="dropdown-item" *ngIf="isLoggedIn">Tài khoản của tôi</a>
+              <a href="" class="dropdown-item" *ngIf="isLoggedIn">Cài đặt</a>
+              <a href="" class="dropdown-item" *ngIf="isLoggedIn"(click)="logout()">Đăng xuất</a>
+            </div>
+          </div>
+        </li>
       </ul>
   
     </nav>
@@ -55,6 +64,29 @@
                   <a routerLink="home" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <a>Thống kê doanh thu</a>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Thống kê sản phẩm</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Đơn hàng
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a routerLink="order-follow" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <a>Theo dõi đơn hàng</a>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -122,7 +154,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="pages/UI/general.html" class="nav-link">
+                  <a routerLink="user" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>User</p>
                   </a>
@@ -174,7 +206,7 @@
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
-                  Quản lý Account
+                  Quản lý Khách
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
@@ -182,7 +214,7 @@
                 <li class="nav-item">
                   <a href="pages/forms/general.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Account</p>
+                    <p>Khách hàng</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -201,29 +233,29 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-table"></i>
+                <i class="nav-icon fas fa-edit"></i>
                 <p>
-                  Tables
+                  Group Khách hàng
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="pages/tables/simple.html" class="nav-link">
+                  <a href="pages/forms/general.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Simple Tables</p>
+                    <p>Nhóm Khách Hàng</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/tables/data.html" class="nav-link">
+                  <a href="pages/forms/advanced.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>DataTables</p>
+                    <p>Advanced Elements</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/tables/jsgrid.html" class="nav-link">
+                  <a href="pages/forms/editors.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>jsGrid</p>
+                    <p>Editors</p>
                   </a>
                 </li>
               </ul>
