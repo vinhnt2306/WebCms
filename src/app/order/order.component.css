@@ -1,0 +1,48 @@
+body {
+    background: #ffffff;
+}
+
+.title {
+    margin-bottom: 5px;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.addnew {
+    font-size: 15px;
+    font-weight: 600;
+    color: blue;
+    cursor: pointer;
+}
+
+.generateCode {
+    font-weight: 600;
+    font-size: 17px;
+    margin-top: 20px;
+}
+
+.type {
+    /* padding-left: px; */
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.plus {
+    width: 30px;
+    background-color: black;
+    height: 30px;
+    color: #ffffff;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.PREPARE_GOODS {
+    color: red;
+}

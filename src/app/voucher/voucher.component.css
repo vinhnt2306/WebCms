@@ -1,0 +1,19 @@
+.header {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 0;
+}
+
+div {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+h5 {
+    font-size: 20px;
+    color: black;
+}
