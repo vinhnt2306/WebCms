@@ -43,6 +43,22 @@ body {
     justify-content: center;
 }
 
-.PREPARE_GOODS {
+.red {
     color: red;
+}
+
+.green {
+    color: green;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.purple {
+    color: purple;
+}
+
+.black {
+    color: black;
 }
