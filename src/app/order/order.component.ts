@@ -15,13 +15,16 @@ export class OrderComponent {
   order: Order = new Order();
   comboStatus: comboStatus[] = [];
   lstOrder: Order[] = [];
+  idOrder: any;
+  idStatus: any;
   ngOnInit() {
     this.orderServices.getListOrder().subscribe((response: any) => {
       this.lstOrder = response.data.orders;
     });
   }
-  openMoup(status: number) {
+  openMoup(status: number, idorder: any) {
     this.genComboStatus(status);
+    this.idOrder = idorder;
   }
   genComboStatus = (status: number) => {
     if (status != 1 && status != 2 && status != 0) {
@@ -114,13 +117,25 @@ export class OrderComponent {
         return 'red';
     }
   };
-  onSubmit() {}
+  onSubmit() {
+    console.log(this.idStatus);
+    console.log(this.idOrder);
+    this.orderServices
+      .updateStatus(this.idOrder, this.idStatus, 'ok')
+      .subscribe((data: any) => {
+        this.orderServices.getListOrder().subscribe((response: any) => {
+          this.lstOrder = response.data.orders;
+          alert('Cập nhật trạng thái thành công');
+        });
+      });
+  }
 
   handleUpdateTrangThai(status: number, id: string) {
-    let payload = {
-      status: status,
-      // uId: this.idparams,
-      idBoss: 'dsdsd',
-    };
+    this.orderServices.updateStatus(id, status, 'ok').subscribe((data: any) => {
+      this.orderServices.getListOrder().subscribe((response: any) => {
+        this.lstOrder = response.data.orders;
+        alert('Cập nhật trạng thái thành công');
+      });
+    });
   }
 }
