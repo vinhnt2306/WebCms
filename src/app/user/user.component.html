@@ -1,6 +1,6 @@
-<h1>Nhà Cung Cấp</h1>
+<h1>User</h1>
   <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onAdd()">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Thêm mới
 </button>
 <br>
@@ -17,28 +17,40 @@
         <form (ngSubmit)="onSubmit()" #form="ngForm">
           <div class="container">
               <div class="mb-6">
-                <label  class="form-label">Tên nhà cung cấp</label>
+                <label  class="form-label">Tên user</label>
                 <input  class="form-control" name="name"
                 #name="ngModel"
-                [(ngModel)]="supplier.name">
+                [(ngModel)]="user.userName">
               </div>
               <div class="mb-6">
-                <label  class="form-label">Số điện thoại </label>
+                <label  class="form-label">Email </label>
                 <input  class="form-control" name="sdt"
                 #name="ngModel"
-                [(ngModel)]="supplier.phoneNumber">
+                [(ngModel)]="user.email">
               </div>
               <div class="mb-6">
-                <label  class="form-label">Địa Chỉ</label>
-                <input  class="form-control" name="adress"
+                <label  class="form-label">Mật khẩu</label>
+                <input type="password"  class="form-control" name="adress"
                 #name="ngModel"
-                [(ngModel)]="supplier.adress">
+                [(ngModel)]="user.password">
               </div>
               <div class="mb-6">
-                <label  class="form-label">Địa chỉ sản phẩm</label>
+                <label  class="form-label">Chức vụ</label>
                 <input  class="form-control" name="provideProduct"
                 #name="ngModel"
-                [(ngModel)]="supplier.provideProducst">
+                [(ngModel)]="user.position">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Mã Code</label>
+                <input  class="form-control" name="provideProduct"
+                #name="ngModel"
+                [(ngModel)]="user.userCode">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Tên đầy đủ</label>
+                <input  class="form-control" name="provideProduct"
+                #name="ngModel"
+                [(ngModel)]="user.fullName">
               </div>
               <br>
           </div>
@@ -51,27 +63,30 @@
     </div>
   </div>
 </div>
-  <h1>Danh sách sản phẩm</h1>
+  <h1>Danh sách người dùng</h1>
   <table class="table align-middle mb-0 bg-white">
     <thead class="bg-light">
       <tr>
         <th>Id</th>
-        <th>Tên nhà cung cấp</th>
-        <th>Số điện thoại</th>
-        <th>Địa chỉ</th>
-        <th>??</th>
-
+        <th>Tài khoản</th>
+        <th>Email</th>
+        <th>Mật khẩu</th>
+        <th>Chức vụ</th>
+        <th>Mã Code</th>
+        <th>Tên đầy đủ</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let sp of suppliers">
-        <td>{{sp.id}}</td>
-        <td>{{sp.name}}</td>
-        <td>{{sp.phoneNumber}}</td>
-        <td>{{sp.adress}}</td>
-        <td>{{sp.provideProducst}}</td>
+      <tr *ngFor="let us of users">
+        <td>{{us.id}}</td>
+        <td>{{us.userName}}</td>
+        <td>{{us.email}}</td>
+        <td>{{us.password}}</td>
+        <td>{{us.position}}</td>
+        <td>{{us.userCode}}</td>
+        <td>{{us.fullName}}</td>
         <td>
-          <button type="button"class="btn btn-primary" (click)="onEdit(sp)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button"class="btn btn-primary" (click)="onEdit(us)" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Edit
           </button>
         </td>
