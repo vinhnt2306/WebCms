@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class OrderServices {
   private baseURL = 'https://localhost:44383';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   category: Category[] = [];
   getListOrder(): Observable<any> {
@@ -32,14 +32,13 @@ export class OrderServices {
     };
     return this.httpClient.request(
       'PUT',
-      `${this.baseURL}/api/Order/UpdateTrangThai?uid=${uId}&status=${status}&idBoss=${idBoss}`,
+      `${this.baseURL}/api/Order/UpdateTrangThai?uid=${uId}&status=${status}&idBoss=${JSON.parse(localStorage.getItem('currentUser') ?? '').data.id}`,
       {
         responseType: 'json',
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem('currentUser') ?? '').data.token
-          }`,
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser') ?? '').data.token
+            }`,
         }),
       }
     );
