@@ -50,7 +50,7 @@
             <th scope="row">{{i}}</th>
             <th scope="row">{{ord.nameCustomer}}</th>
             <th scope="row">{{i}}</th>
-            <th scope="row">{{ord.amountShip}}</th>
+            <th scope="row">{{ord.totalAmount + ord.amountShip | currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</th>
             <th scope="row">
                 <div [innerHTML]="GenStatus(ord.status)" [ngClass]="GenClassStatus(ord.status)"></div>
             </th>
