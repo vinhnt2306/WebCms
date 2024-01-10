@@ -54,7 +54,11 @@
             <th scope="row">
                 <div [innerHTML]="GenStatus(ord.status)" [ngClass]="GenClassStatus(ord.status)"></div>
             </th>
-            <th scope="row"><button type="button" class="btn btn-primary">
+            <th scope="row">
+                <button type="button" class="btn btn-primary" (click)="createOderGHN()">
+                    Giao hàng
+                </button>
+                <button type="button" class="btn btn-primary">
                     Edit
                 </button>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openMoup(ord.status,ord.id)">

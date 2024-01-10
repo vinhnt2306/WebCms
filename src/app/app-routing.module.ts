@@ -11,6 +11,7 @@ import { OderFollowComponent } from './oder-follow/oder-follow.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import { VouncherComponent } from './vouncher/vouncher.component';
 import { UserComponent } from './user/user.component';
+import { BuyadminComponent } from './buyadmin/buyadmin.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +27,8 @@ const routes: Routes = [
       { path: 'vouncher', component: VouncherComponent },
       { path: 'supplier', component: SupplierComponent },
       { path: 'user', component: UserComponent },
+      { path: 'buyadmin', component: BuyadminComponent },
+
       // Thêm các routes con khác cho 'menu' ở đây
     ]
   },

@@ -138,4 +138,8 @@ export class OrderComponent {
       });
     });
   }
+
+  createOderGHN(){
+      
+  }
 }

@@ -13,9 +13,19 @@ export class ProductService {
 
   //get product
   getListProduct(): Observable<any> {
-    let data = {
-      "": "",
+    const data = {
+      "":""
 
+    }
+    return this.httpClient.request('POST', `${this.baseURL}/api/HomePage/Process`, {
+      body: data,
+      observe: 'body',
+      responseType: 'json'
+    })
+  }
+  getListProductSearch(searchText: string): Observable<any> {
+    const data = {
+      name: searchText
     }
     return this.httpClient.request('POST', `${this.baseURL}/api/HomePage/Process`, {
       body: data,
@@ -31,15 +41,28 @@ export class ProductService {
     });
   }
   //
-  addToCart(productId: string, quantity: number): Observable<any> {
+  addToCart(productId: string, quantity: number,LoginType:boolean): Observable<any> {
     const body = {
       ProductId: productId,
       Quantity: quantity,
+      LoginType:LoginType=false,
       token : JSON.parse(localStorage.getItem('currentUser')??"").data.token
     };
-
     return this.httpClient.post(`${this.baseURL}/api/AddToCart/Process`, body)
     // return this.httpClient.post(`${this.baseURL}/api/AddToCart/Process`, body);
+  }
+
+  getCartItem() : Observable<any>{
+    let data = {
+      token : JSON.parse(localStorage.getItem('currentUser')??"").data.token
+    }
+    return this.httpClient.request('POST',`${this.baseURL}/api/CartItem/Process`,
+    {
+      body : data,
+      observe:'body',
+      responseType : 'json',
+
+    })
   }
 
   upLoadImage(data: FormData) {

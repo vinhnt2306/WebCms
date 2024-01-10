@@ -44,4 +44,20 @@ export class OrderServices {
       }
     );
   }
+  OderGNH(oderId:string,serviceId:any): Observable<any> {
+    const body = {
+      OderId : oderId,
+      ServiceId: serviceId,
+      token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,
+    };
+    return this.httpClient.request(
+      'POST',
+      `${this.baseURL}/api/CreateOrderGHN/Process`,
+      {
+        body: body,
+        observe: 'body',
+        responseType: 'json',
+      }
+    );
+  }
 }
