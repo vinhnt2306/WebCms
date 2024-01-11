@@ -14,6 +14,7 @@
         <select class="form-select">
             <option value="1">Đã phê duyệt</option>
             <option value="2">Từ chối</option>
+            <option value="2">vv</option>
             <!-- Các options khác -->
         </select>
     </div>
@@ -45,7 +46,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let ord of lstOrder; let i = index">
-            <th scope="row">{{i}}</th>
+            <th scope="row">{{ord.id}}</th>
             <th scope="row">{{ord.code}}</th>
             <th scope="row">{{i}}</th>
             <th scope="row">{{ord.nameCustomer}}</th>
@@ -55,11 +56,8 @@
                 <div [innerHTML]="GenStatus(ord.status)" [ngClass]="GenClassStatus(ord.status)"></div>
             </th>
             <th scope="row">
-                <button type="button" class="btn btn-primary" (click)="createOderGHN()">
+                <button type="button" class="btn btn-primary" (click)="createOderGHN(ord.id)">
                     Giao hàng
-                </button>
-                <button type="button" class="btn btn-primary">
-                    Edit
                 </button>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openMoup(ord.status,ord.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -68,30 +66,61 @@
                             d="M7.996 0A7.998 7.998 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.602 5.602 0 0 1 2.4 7.865 5.579 5.579 0 0 1 8.054 2.4a5.599 5.599 0 0 1 5.535 5.81l-.002.046a6.116 6.116 0 0 1-.012.192l-.005.061a4.85 4.85 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 7.998 7.998 0 0 0 7.996.001Z" />
                     </svg>Chuyển đổi trạng thái
                 </button>
-                <div *ngIf="ord.status == 1">
-                    <button (click)="handleUpdateTrangThai(3,ord.id)" class="btn btn-primary">
-                        Đang giao hàng
-                    </button>
-                </div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalchangeSTT">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-alexa" viewBox="0 0 16 16">
+                        <path
+                            d="M7.996 0A7.998 7.998 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.602 5.602 0 0 1 2.4 7.865 5.579 5.579 0 0 1 8.054 2.4a5.599 5.599 0 0 1 5.535 5.81l-.002.046a6.116 6.116 0 0 1-.012.192l-.005.061a4.85 4.85 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 7.998 7.998 0 0 0 7.996.001Z" />
+                    </svg>Chuyển đổi change
+                </button>
             </th>
         </tr>
     </tbody>
 </table>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-m">
+<div class="modal fade" id="modalchangeSTT" tabindex="-1" aria-labelledby="modalchangeSTT" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Chuyển đổi trạng thái đơn hàng</h1>
+                <h1 class="modal-title" id="modalchangeSTT">Chuyển đổi trạng thái đơn hàng</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm">
+                    <select class="form-select" name="cars" id="cars">
+                        <option>3 đã hủy đơn</option>
+                        <option>4 trả hàng</option>
+                        <option>5 trả hàng 1 phần </option>
+                        <option>6 hóa đơn mới tạo, trong thời gian đổi trả.</option>
+                        <option>7 giao thành công</option>
+                    </select>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="comboStatus.length === 0">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Chuyển đổi trạng thái đơn hàng</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form (ngSubmit)="onSubmit()" #form="ngForm">
                     <select class="form-select" name="cars" id="cars" [(ngModel)]="idStatus">
-                        <option *ngFor="let cbo of comboStatus" [value]="cbo.id">
+                        <!-- <option *ngFor="let cbo of comboStatus" [value]="cbo.id">
                             {{cbo.value}}
-                        </option>
+                        </option> -->
+                        <!-- <option>3 đã hủy đơn</option>
+                        <option>4 trả hàng</option>
+                        <option>5 trả hàng 1 phần </option>
+                        <option>6 hóa đơn mới tạo, trong thời gian đổi trả.</option>
+                        <option>7 giao thành công</option> -->
                     </select>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
