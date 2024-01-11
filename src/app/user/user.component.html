@@ -1,0 +1,104 @@
+<h1>User</h1>
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Thêm mới
+</button>
+<br>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{title}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+          <div class="container">
+              <div class="mb-6">
+                <label  class="form-label">Tên user</label>
+                <input  class="form-control" name="name"
+                #name="ngModel"
+                [(ngModel)]="user.userName">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Email </label>
+                <input  class="form-control" name="sdt"
+                #name="ngModel"
+                [(ngModel)]="user.email">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Mật khẩu</label>
+                <input type="password"  class="form-control" name="adress"
+                #name="ngModel"
+                [(ngModel)]="user.password">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Chức vụ</label>
+                <input  class="form-control" name="provideProduct"
+                #name="ngModel"
+                [(ngModel)]="user.position">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Mã Code</label>
+                <input  class="form-control" name="provideProduct"
+                #name="ngModel"
+                [(ngModel)]="user.userCode">
+              </div>
+              <div class="mb-6">
+                <label  class="form-label">Tên đầy đủ</label>
+                <input  class="form-control" name="provideProduct"
+                #name="ngModel"
+                [(ngModel)]="user.fullName">
+              </div>
+              <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  <h1>Danh sách người dùng</h1>
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Id</th>
+        <th>Tài khoản</th>
+        <th>Email</th>
+        <th>Mật khẩu</th>
+        <th>Chức vụ</th>
+        <th>Mã Code</th>
+        <th>Tên đầy đủ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let us of users">
+        <td>{{us.id}}</td>
+        <td>{{us.userName}}</td>
+        <td>{{us.email}}</td>
+        <td>{{us.password}}</td>
+        <td>{{us.position}}</td>
+        <td>{{us.userCode}}</td>
+        <td>{{us.fullName}}</td>
+        <td>
+          <button type="button"class="btn btn-primary" (click)="onEdit(us)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Edit
+          </button>
+        </td>
+      </tr>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+<br>
+<!-- <input type="file" (change)="onFileSelected($event)" />
+ <input type="text" [(ngModel)]="public_id" placeholder="Enter image name" />
+<button (click)="upLoad()">Upload Image</button> -->
+
+
+

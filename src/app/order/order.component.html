@@ -50,11 +50,15 @@
             <th scope="row">{{i}}</th>
             <th scope="row">{{ord.nameCustomer}}</th>
             <th scope="row">{{i}}</th>
-            <th scope="row">{{ord.amountShip}}</th>
+            <th scope="row">{{ord.totalAmount + ord.amountShip | currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</th>
             <th scope="row">
                 <div [innerHTML]="GenStatus(ord.status)" [ngClass]="GenClassStatus(ord.status)"></div>
             </th>
-            <th scope="row"><button type="button" class="btn btn-primary">
+            <th scope="row">
+                <button type="button" class="btn btn-primary" (click)="createOderGHN()">
+                    Giao hàng
+                </button>
+                <button type="button" class="btn btn-primary">
                     Edit
                 </button>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openMoup(ord.status,ord.id)">

@@ -1,7 +1,6 @@
 import { Component,Input ,OnInit,ElementRef, ViewChild } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { Product } from 'src/core/product';
-import { NgForm } from '@angular/forms';
 import { Category } from 'src/core/category';
 import { CartegoryService } from '../service/cartegory.service';
 
@@ -35,7 +34,7 @@ export class ProductComponent implements OnInit {
       this.productService.getListProduct().subscribe((response: any) => {
       this.products = response.data.lstProduct
     })
-    this.categortService.getCategory().subscribe((response: any) => {
+    this.categortService.getListCategory().subscribe((response: any) => {
       this.categorys = response.data.lstCategory
     })
   }

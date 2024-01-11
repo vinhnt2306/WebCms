@@ -3,5 +3,8 @@ export class Category{
   "name": string;
   "description": string;
   "status": number|null;
-  "image": string
+  "image":string;
+  "UrlImage": string;
+  "token" : string;
+  "TypeImage": string;
 }
