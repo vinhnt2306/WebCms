@@ -11,7 +11,7 @@ type comboStatus = {
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent {
-  constructor(public orderServices: OrderServices) {}
+  constructor(public orderServices: OrderServices) { }
   order: Order = new Order();
   comboStatus: comboStatus[] = [];
   lstOrder: Order[] = [];
@@ -129,6 +129,10 @@ export class OrderComponent {
       });
   }
 
+  onChangeStatus() {
+    console.log(this.idStatus);
+    console.log(this.idOrder);
+  }
   handleUpdateTrangThai(status: number, id: string) {
     this.orderServices.updateStatus(id, status, 'ok').subscribe((data: any) => {
       this.orderServices.getListOrder().subscribe((response: any) => {
@@ -137,18 +141,20 @@ export class OrderComponent {
       });
     });
   }
+  Giaohang(id: any) {
 
-  createOderGHN(orderId:string){
-      this.orderServices.OderGNH(orderId).subscribe(data =>{
-        console.log(data);
-        if(data.status == "200"){
-          alert(data.messages)
-          console.log(data.messages)
-        }else{
-          alert(data.messages)
-          console.log(data.messages)
-        }
-      },
+  }
+  createOderGHN(orderId: string) {
+    this.orderServices.OderGNH(orderId).subscribe(data => {
+      console.log(data);
+      if (data.status == "200") {
+        alert(data.messages)
+        console.log(data.messages)
+      } else {
+        alert(data.messages)
+        console.log(data.messages)
+      }
+    },
       error => {
         console.error('Lỗi', error);
       }

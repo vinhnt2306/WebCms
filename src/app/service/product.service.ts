@@ -68,7 +68,14 @@ export class ProductService {
     return this.httpClient.post(`${this.baseURL}/api/AddToCart/Process`, body)
     // return this.httpClient.post(`${this.baseURL}/api/AddToCart/Process`, body);
   }
-
+  deleteCartItem(id: string): Observable<any> {
+    const body = {
+      id: id,
+      LoginType: true,
+      token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,
+    };
+    return this.httpClient.post(`${this.baseURL}/api/DeleteCartItem/Process`, body);
+  }
   getCartItem(): Observable<any> {
     let data = {
       token: JSON.parse(localStorage.getItem('currentUser') ?? "").data.token,
@@ -82,7 +89,27 @@ export class ProductService {
 
       })
   }
+  getListVouncher(): Observable<any> {
+    let data = {
+    }
+    return this.httpClient.request('POST', `${this.baseURL}/api/GetListVoucher/Process`,
+      {
+        body: data,
+        observe: 'body',
+        responseType: 'json',
 
+      })
+  }
+  getListPayment(): Observable<any> {
+    let data = {
+    }
+    return this.httpClient.request('POST', `${this.baseURL}/api/GetlstPaymentMethod/Process`,
+      {
+        body: data,
+        observe: 'body',
+        responseType: 'json',
+      })
+  }
   upLoadImage(data: FormData) {
     return this.httpClient.post(`https://api.cloudinary.com/v1_1/dnvuz3evz/image/upload`, data);
   }

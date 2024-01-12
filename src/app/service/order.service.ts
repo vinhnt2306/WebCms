@@ -43,9 +43,48 @@ export class OrderServices {
       }
     );
   }
-  OderGNH(oderId:string): Observable<any> {
+  createOder(
+    cartDetailID: any,
+    paymentMenthodID: string,
+    addressDeliveryId: string,
+    voucherID: any
+  ): Observable<any> {
     const body = {
-      orderId : oderId,
+      cartDetailID: cartDetailID,
+      paymentMenthodID: paymentMenthodID,
+      voucherID: voucherID,
+      Token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,
+      customerName: "Nguyễn Tuấn Vinh",
+      phoneNumber: "0123456789",
+      description: "No comment"
+    };
+    return this.httpClient.post(
+      `${this.baseURL}/api/CreateOrderCounter/Process`,
+      body
+    );
+    // return this.httpClient.post(`${this.baseURL}/api/AddToCart/Process`, body);
+  }
+
+  confirmOrder(payload: any): Observable<any> {
+    const body = {
+      token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,
+      description: 'không comment',
+      cartDetailId: payload.cartDetailId,
+      totalAmountDiscount: payload.totalAmountDiscount,
+      totalAmount: payload.totalAmount,
+      paymentMethodId: payload.paymentMethodId,
+      voucherID: payload.voucherID,
+    };
+    return this.httpClient.post(
+      `${this.baseURL}/api/ConfirmOrderCounter/Process`,
+      body
+    );
+    // return this.httpClient.post(`${this.baseURL}/api/AddToCart/Process`, body);
+  }
+
+  OderGNH(oderId: string): Observable<any> {
+    const body = {
+      orderId: oderId,
       token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,
     };
     return this.httpClient.request(
