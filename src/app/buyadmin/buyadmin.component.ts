@@ -6,19 +6,20 @@ import { OrderServices } from '../service/order.service';
 @Component({
   selector: 'app-buyadmin',
   templateUrl: './buyadmin.component.html',
-  styleUrls: ['./buyadmin.component.css']
+  styleUrls: ['./buyadmin.component.css'],
 })
 export class BuyadminComponent {
-
   @Input() product!: Product;
   products: Product[] = [];
   pdSearch: Product[] = [];
+  pageSize = 25;
+  page = 4;
   sum = 0;
   tongtien = 0;
   discount = 0;
   getListPayment: any[] = [];
-  nameVoucher = "";
-  error = "";
+  nameVoucher = '';
+  error = '';
   status: boolean = false;
   getListVouncher: any[] = [];
   orderResponse: any;
@@ -26,11 +27,14 @@ export class BuyadminComponent {
   numberOfProduct = 0;
   searchText: string = '';
   cartProducts: any;
-  productDetail: Product = new Product;
+  productDetail: Product = new Product();
   cartProductsByPayment: any[] = []; //sản phẩm trong giỏ hàng CartItem
 
-  constructor(private productService: ProductService,
-    private cartService: CartegoryService, private oderService: OrderServices,) { }
+  constructor(
+    private productService: ProductService,
+    private cartService: CartegoryService,
+    private oderService: OrderServices
+  ) {}
   ngOnInit(): void {
     var lstCart: any = [];
 
@@ -59,96 +63,104 @@ export class BuyadminComponent {
   }
   loadProducts(): void {
     this.productService.getListProduct().subscribe((response: any) => {
-      this.products = response.data.lstProduct
-      console.log(this.products)
+      this.products = response.data.lstProduct;
+      console.log(this.products);
     });
   }
   loadProductsSearch(): void {
-    this.productService.getListProductSearch(this.searchText).subscribe((response: any) => {
-      this.products = response.data.lstProduct
-      console.log(this.products)
-    });
+    this.productService
+      .getListProductSearch(this.searchText)
+      .subscribe((response: any) => {
+        this.products = response.data.lstProduct;
+        console.log(this.products);
+      });
   }
   addToCartProduct(productId: string, quantity: number) {
-    this.productService.addToCart(productId, quantity, true)
-      .subscribe(
-        data => {
-          console.log(data);
-          if (data.status == "200") {
-            alert('thêm sản phẩm vào giỏ hàng thành công');
-            this.productService.getCartItem().subscribe((response: any) => {
-              this.cartProductsByPayment = response.data.cartItem;
-              this.numberOfProduct = response.data.cartItem.length;
-              this.sum = response.data.cartItem.reduce((next: any, prev: any) => {
-                return next + prev.price * prev.quantity;
-              }, 0);
-              this.tongtien = this.sum - this.discount;
-            });
-          } else {
-            alert('Sản phẩm không đủ số lượng để thêm vui lòng liên hệ cửa hàng.');
-          }
-        },
-        error => {
-          console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
-          // Xử lý lỗi ở đây, ví dụ: hiển thị thông báo lỗi cho người dùng
-          alert('Sản phẩm đã hết hàng.');
+    this.productService.addToCart(productId, quantity, true).subscribe(
+      (data) => {
+        console.log(data);
+        if (data.status == '200') {
+          alert('thêm sản phẩm vào giỏ hàng thành công');
+          this.productService.getCartItem().subscribe((response: any) => {
+            this.cartProductsByPayment = response.data.cartItem;
+            this.numberOfProduct = response.data.cartItem.length;
+            this.sum = response.data.cartItem.reduce((next: any, prev: any) => {
+              return next + prev.price * prev.quantity;
+            }, 0);
+            this.tongtien = this.sum - this.discount;
+          });
+        } else {
+          alert(
+            'Sản phẩm không đủ số lượng để thêm vui lòng liên hệ cửa hàng.'
+          );
         }
-      );
+      },
+      (error) => {
+        console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
+        // Xử lý lỗi ở đây, ví dụ: hiển thị thông báo lỗi cho người dùng
+        alert('Sản phẩm đã hết hàng.');
+      }
+    );
   }
 
   onChangePayMoney(e: any) {
-    this.change = Number(e.target.value) - this.tongtien
+    this.change = Number(e.target.value) - this.tongtien;
   }
   onFindVoucher(e: any) {
     this.nameVoucher = e.target.value;
     if (e.target.value.length === 0) {
-      this.error = "";
+      this.error = '';
     }
   }
   handleUseVoucher() {
-    let resule = this.getListVouncher.find((x: any) => x.code === this.nameVoucher && x.type == "discount");
+    let resule = this.getListVouncher.find(
+      (x: any) => x.code === this.nameVoucher && x.type == 'discount'
+    );
     if (resule) {
-      this.error = "";
+      this.error = '';
       this.ConfirmOder();
     } else {
-      this.error = "Mã giảm giá không tồn tại";
+      this.error = 'Mã giảm giá không tồn tại';
     }
   }
   hanldeRemoveCartItem = (cart: any) => {
     this.status = true;
-    this.productService.deleteCartItem(cart.cartDetailID).subscribe(data => {
-      alert('Xóa sản phẩm thành công')
+    this.productService.deleteCartItem(cart.cartDetailID).subscribe((data) => {
+      alert('Xóa sản phẩm thành công');
       this.productService.getCartItem().subscribe((response: any) => {
-        this.cartProductsByPayment = response.data.cartItem
-        this.sum = response.data.cartItem.reduce((next: any, prev: any) => { return (next + prev.price * prev.quantity) }, 0)
-      })
+        this.cartProductsByPayment = response.data.cartItem;
+        this.sum = response.data.cartItem.reduce((next: any, prev: any) => {
+          return next + prev.price * prev.quantity;
+        }, 0);
+      });
       this.status = false;
-
-    })
-  }
+    });
+  };
 
   ConfirmOder() {
     let cartId = this.cartProductsByPayment.map(
       (response: any) => response.cartDetailID
     );
-    let voucher = []
+    let voucher = [];
     if (this.nameVoucher) {
-      let resule = this.getListVouncher.find((x: any) => x.code === this.nameVoucher && x.type == "discount");
+      let resule = this.getListVouncher.find(
+        (x: any) => x.code === this.nameVoucher && x.type == 'discount'
+      );
       if (resule) {
-        voucher.push(resule.id.toString())
+        voucher.push(resule.code.toString());
       }
-
     }
     let payload: any = {
       CartDetailID: cartId,
-      voucherID: voucher.length > 0 ? voucher : [""],
+      voucherID: voucher.length > 0 ? voucher : [''],
       PaymentMenthodID: this.getListPayment[0].id,
     };
     if (voucher.length == 0) {
       delete payload.voucherID;
     }
-    this.
-      oderService.createOder(
+    console.log(payload);
+    this.oderService
+      .createOder(
         payload.CartDetailID,
         this.getListPayment[0].id,
         payload.AddressDeliveryId,
@@ -158,15 +170,11 @@ export class BuyadminComponent {
         this.orderResponse = data.data;
         if (data.data) {
           this.tongtien = data.data.totalAmount ? data.data.totalAmount : 0;
-          let result = this.getListVouncher.find((x: any) => x.code === this.nameVoucher && x.type == "discount")
-          if (this.nameVoucher && result) {
-            if (result.unit == "%") {
-              this.discount = result.unit * this.tongtien
-            } else {
-              this.discount = result.discount;
-            }
-          }
-          this.tongtien = this.tongtien - this.discount;
+          let result = this.getListVouncher.find(
+            (x: any) => x.code === this.nameVoucher && x.type == 'discount'
+          );
+          this.discount = data.data.totalAmountDiscount;
+          this.tongtien = data.data.totalAmount;
         }
       });
   }
@@ -175,13 +183,14 @@ export class BuyadminComponent {
     let cartId = this.cartProductsByPayment.map(
       (response: any) => response.cartDetailID
     );
-    let voucher = []
+    let voucher = [];
     if (this.nameVoucher) {
-      let resule = this.getListVouncher.find((x: any) => x.code === this.nameVoucher && x.type == "discount");
+      let resule = this.getListVouncher.find(
+        (x: any) => x.code === this.nameVoucher && x.type == 'discount'
+      );
       if (resule) {
-        voucher.push(resule.id.toString())
+        voucher.push(resule.code.toString());
       }
-
     }
 
     let payload: any = {
@@ -189,8 +198,7 @@ export class BuyadminComponent {
       description: 'không comment',
       cartDetailId: cartId,
       totalAmountDiscount: 0,
-      amountShip: this.orderResponse.amountShip,
-      voucherID: voucher.length > 0 ? voucher : [""],
+      voucherID: voucher.length > 0 ? voucher : [''],
       totalAmount: this.orderResponse.totalAmount,
       PaymentMenthodID: this.getListPayment[0].id,
     };
@@ -201,7 +209,7 @@ export class BuyadminComponent {
       // this.cartProductsByPayment = [];
       // this.confirmResponse = res.data;
 
-      if (res.status !== "200") {
+      if (res.status !== '200') {
         alert('Cos lỗi xảy ra lỗi');
       } else {
         alert('Đặt hàng thành công');

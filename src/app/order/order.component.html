@@ -48,7 +48,7 @@
         <tr *ngFor="let ord of lstOrder; let i = index">
             <th scope="row">{{ord.id}}</th>
             <th scope="row">{{ord.code}}</th>
-            <th scope="row">{{i}}</th>
+            <th scope="row">{{ord.createDate | date:'yyyy-MM-dd HH:mm:ss' }}</th>
             <th scope="row">{{ord.nameCustomer}}</th>
             <th scope="row">{{i}}</th>
             <th scope="row">{{ord.totalAmount + ord.amountShip | currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</th>
@@ -59,8 +59,7 @@
                 <button type="button" class="btn btn-primary" (click)="createOderGHN(ord.id)">
                     Giao hàng
                 </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    (click)="openMoup(ord.status,ord.id)">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openMoup(ord.status,ord.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-alexa" viewBox="0 0 16 16">
                         <path

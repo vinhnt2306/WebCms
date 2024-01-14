@@ -19,7 +19,8 @@ import { CustomerComponent } from './customer/customer.component';
 import { GroupcustomerComponent } from './groupcustomer/groupcustomer.component';
 import { UserComponent } from './user/user.component';
 import { BuyadminComponent } from './buyadmin/buyadmin.component';
-
+import { CommonModule, DatePipe } from '@angular/common';
+import { NzTableModule } from 'ng-zorro-antd/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,10 +38,16 @@ import { BuyadminComponent } from './buyadmin/buyadmin.component';
     CustomerComponent,
     GroupcustomerComponent,
     UserComponent,
-    BuyadminComponent
+    BuyadminComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    NzTableModule,
+  ],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

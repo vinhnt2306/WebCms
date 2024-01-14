@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class OrderServices {
   private baseURL = 'https://localhost:44383';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   category: Category[] = [];
   getListOrder(): Observable<any> {
@@ -32,13 +32,18 @@ export class OrderServices {
     };
     return this.httpClient.request(
       'PUT',
-      `${this.baseURL}/api/Order/UpdateTrangThai?uid=${uId}&status=${status}&idBoss=${JSON.parse(localStorage.getItem('currentUser') ?? '').data.id}`,
+      `${
+        this.baseURL
+      }/api/Order/UpdateTrangThai?uid=${uId}&status=${status}&idBoss=${
+        JSON.parse(localStorage.getItem('currentUser') ?? '').data.id
+      }`,
       {
         responseType: 'json',
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser') ?? '').data.token
-            }`,
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem('currentUser') ?? '').data.token
+          }`,
         }),
       }
     );
@@ -52,11 +57,11 @@ export class OrderServices {
     const body = {
       cartDetailID: cartDetailID,
       paymentMenthodID: paymentMenthodID,
-      voucherID: voucherID,
+      voucherCode: voucherID,
       Token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,
-      customerName: "Nguyễn Tuấn Vinh",
-      phoneNumber: "0123456789",
-      description: "No comment"
+      customerName: 'Nguyễn Tuấn Vinh',
+      phoneNumber: '0123456789',
+      description: 'No comment',
     };
     return this.httpClient.post(
       `${this.baseURL}/api/CreateOrderCounter/Process`,
