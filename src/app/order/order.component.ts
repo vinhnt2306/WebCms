@@ -20,6 +20,7 @@ export class OrderComponent {
   ngOnInit() {
     this.orderServices.getListOrder().subscribe((response: any) => {
       this.lstOrder = response.data.orders;
+      console.log(this.lstOrder)
     });
   }
   openMoup(status: number, idorder: any) {
@@ -132,6 +133,19 @@ export class OrderComponent {
   onChangeStatus() {
     console.log(this.idStatus);
     console.log(this.idOrder);
+    this.orderServices.updateStatusByAdmin(this.idOrder,this.idStatus).subscribe((res:any)=>
+    {
+      if(res.status == '200'){
+        this.orderServices.getListOrder().subscribe((response: any) => {
+          this.lstOrder = response.data.orders;
+          alert('Cập nhật trạng thái thành công');
+        });
+      }
+      else{
+        alert(res.messages)
+      }
+    })
+    
   }
   handleUpdateTrangThai(status: number, id: string) {
     this.orderServices.updateStatus(id, status, 'ok').subscribe((data: any) => {

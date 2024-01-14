@@ -50,7 +50,7 @@
             <th scope="row">{{ord.code}}</th>
             <th scope="row">{{i}}</th>
             <th scope="row">{{ord.nameCustomer}}</th>
-            <th scope="row">{{i}}</th>
+            <th scope="row">{{i}}sp</th>
             <th scope="row">{{ord.totalAmount + ord.amountShip | currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</th>
             <th scope="row">
                 <div [innerHTML]="GenStatus(ord.status)" [ngClass]="GenClassStatus(ord.status)"></div>
@@ -59,15 +59,7 @@
                 <button type="button" class="btn btn-primary" (click)="createOderGHN(ord.id)">
                     Giao hàng
                 </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    (click)="openMoup(ord.status,ord.id)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-alexa" viewBox="0 0 16 16">
-                        <path
-                            d="M7.996 0A7.998 7.998 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.602 5.602 0 0 1 2.4 7.865 5.579 5.579 0 0 1 8.054 2.4a5.599 5.599 0 0 1 5.535 5.81l-.002.046a6.116 6.116 0 0 1-.012.192l-.005.061a4.85 4.85 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 7.998 7.998 0 0 0 7.996.001Z" />
-                    </svg>Chuyển đổi trạng thái
-                </button>
-                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalchangeSTT"
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalchangeSTT"
                     (click)="openMoup(ord.status,ord.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-alexa" viewBox="0 0 16 16">
@@ -75,13 +67,13 @@
                             d="M7.996 0A7.998 7.998 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.602 5.602 0 0 1 2.4 7.865 5.579 5.579 0 0 1 8.054 2.4a5.599 5.599 0 0 1 5.535 5.81l-.002.046a6.116 6.116 0 0 1-.012.192l-.005.061a4.85 4.85 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 7.998 7.998 0 0 0 7.996.001Z" />
                     </svg>Chuyển đổi change
                 </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalchangeSTT"
-                    (click)="Giaohang(ord.id)">
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    (click)="openMoup(ord.status,ord.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-alexa" viewBox="0 0 16 16">
                         <path
                             d="M7.996 0A7.998 7.998 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.602 5.602 0 0 1 2.4 7.865 5.579 5.579 0 0 1 8.054 2.4a5.599 5.599 0 0 1 5.535 5.81l-.002.046a6.116 6.116 0 0 1-.012.192l-.005.061a4.85 4.85 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 7.998 7.998 0 0 0 7.996.001Z" />
-                    </svg>Giao hàng
+                    </svg>Chuyển đổi trạng thái
                 </button> -->
             </th>
         </tr>
@@ -112,8 +104,8 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal cũ -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -126,11 +118,11 @@
                         <option *ngFor="let cbo of comboStatus" [value]="cbo.id">
                             {{cbo.value}}
                         </option>
-                        <!-- <option>3 đã hủy đơn</option>
+                        <option>3 đã hủy đơn</option>
                         <option>4 trả hàng</option>
                         <option>5 trả hàng 1 phần </option>
                         <option>6 hóa đơn mới tạo, trong thời gian đổi trả.</option>
-                        <option>7 giao thành công</option> -->
+                        <option>7 giao thành công</option>
                     </select>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -140,4 +132,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

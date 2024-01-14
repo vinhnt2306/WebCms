@@ -1,13 +1,13 @@
 export class Product {
   "id": string;
-  "name": string;
+  "name": string | any;
   "code": string;
   "price": number | null;
   "quantity": number | null;
   "status": number | null;
   "description": string;
   "priceNet": number | null;
-  "UrlImage": string;
+  "UrlImage": any;
   "image": string;
   "CategoryId": string;
   "token": string;
@@ -23,7 +23,7 @@ export class ProductUpdate {
   "status": number | null;
   "description": string;
   "priceNet": number | null;
-  "UrlImage": string;
+  "UrlImage": any;
   "image": string;
   "CategoryId": string;
   "token": string;

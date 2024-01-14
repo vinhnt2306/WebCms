@@ -156,6 +156,7 @@ export class BuyadminComponent {
       )
       .subscribe((data) => {
         this.orderResponse = data.data;
+        console.log(data.data)
         if (data.data) {
           this.tongtien = data.data.totalAmount ? data.data.totalAmount : 0;
           let result = this.getListVouncher.find((x: any) => x.code === this.nameVoucher && x.type == "discount")

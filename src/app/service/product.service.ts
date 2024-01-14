@@ -41,6 +41,7 @@ export class ProductService {
       TypeImage: "1"
     });
   }
+  //sửa sản phẩm
   updateProduct(product: ProductUpdate): Observable<any> {
     return this.httpClient.post(`${this.baseURL}/api/EditProduct/Process`, {
       ...product,

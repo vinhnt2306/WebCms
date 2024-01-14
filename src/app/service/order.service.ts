@@ -25,7 +25,23 @@ export class OrderServices {
       }
     );
   }
-
+  
+  updateStatusByAdmin(id:string,status:number): Observable<any>{
+    const body = {
+      id:id,
+      status:status,
+      token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,
+    };
+    return this.httpClient.request(
+      'POST',
+      `${this.baseURL}/api/UpdateStatusOrder/Process`,
+      {
+        body: body,
+        observe: 'body',
+        responseType: 'json',
+      }
+    );
+  }
   updateStatus(uId: string, status: number, idBoss: string): Observable<any> {
     const body = {
       token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,

@@ -19,7 +19,8 @@ import { CustomerComponent } from './customer/customer.component';
 import { GroupcustomerComponent } from './groupcustomer/groupcustomer.component';
 import { UserComponent } from './user/user.component';
 import { BuyadminComponent } from './buyadmin/buyadmin.component';
-
+import { FormGroup } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,7 @@ import { BuyadminComponent } from './buyadmin/buyadmin.component';
     UserComponent,
     BuyadminComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule,ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
