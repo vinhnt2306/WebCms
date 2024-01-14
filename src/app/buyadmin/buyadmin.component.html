@@ -1,0 +1,190 @@
+<br>
+<div class="d-flex justify-content-between align-items-center">
+    <h1 style="margin-left: 40px;">Bán Hàng Tại Quầy</h1><button style="margin-right: 38px;" class="btn btn-primary"
+        type="button">Xóa hóa đơn</button>
+</div>
+<div class="row">
+    <div class="col-md-8" style="margin: 0 auto;">
+        <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Tìm kiếm sản phẩm"
+                aria-label="Search" aria-describedby="searchButton" (input)="loadProductsSearch()">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="searchButton">Tìm kiếm</button>
+            </div>
+        </div>
+
+        <div *ngFor="let product of pdSearch" class="card mb-3">
+            <!-- Hiển thị thông tin sản phẩm -->
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">Price: {{ product.price | currency:'USD':'symbol' }}</p>
+                <!-- Thêm các thông tin khác nếu cần -->
+            </div>
+        </div>
+
+        <table class="table mt-4">
+            <thead class="bg-light">
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>PriceNet</th>
+                    <th>Image</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pd of products">
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="addToCartProduct(pd.id,1)">+</button>
+                    </td>
+                    <td>{{pd.name}}</td>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+        <h3>Thông tin giỏ hàng</h3>
+        <div class="row">
+            <div class="col col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datarow">
+                        <tr *ngFor="let cart of cartProductsByPayment;index as i">
+                            <td>{{i+1}}</td>
+                            <td>
+                                <img [src]="cart.image" class="hinhdaidien">
+                            </td>
+                            <td>{{cart.nameProduct}}</td>
+                            <td class="text-right">
+                                <button class="btn btn-sm btn-info">-</button>
+                                {{cart.quantity}}
+                                <button class="btn btn-sm btn-info">+</button>
+                            </td>
+                            <td class="text-right">{{cart.price| currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</td>
+                            <td class="text-right">{{cart.quantity*cart.price | currency:'VND': 'symbol':'1.0-0' |
+                                slice: 1}}đ
+                            </td>
+                            <td>
+                                <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `sp_ma` -->
+                                <button class="btn btn-primary" type="button" [disabled]="status"
+                                    (click)="hanldeRemoveCartItem(cart)">
+                                    <span class="spinner-border spinner-border-sm" (ngModel)="status" *ngIf="status"
+                                        role="status" aria-hidden="true"></span>
+                                    Xóa
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" style="margin: 0 auto;">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                aria-describedby="searchButton">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="searchButton">Search</button>
+            </div>
+        </div>
+        <br>
+        <!-- button -->
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Chi tiết sản phẩm
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Understood</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- button -->
+        <div class="d-flex flex-column b-bottom">
+            <div class="d-flex justify-content-between py-2">
+                <small class="text-muted">Số lượng sản phẩm</small>
+                <p>{{numberOfProduct}}</p>
+            </div>
+            <div class="d-flex justify-content-between pb-2">
+                <small class="text-muted">Tổng tiền</small>
+                <p>{{sum| currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center gap-10 pb-2">
+                <small class="text-muted"><img src="../../assets/img/teenyicons_discount-outline.svg" alt="">ACV
+                    Voucher</small>
+                <p>Chọn Hoặc Nhập Mã</p>
+            </div>
+            <div class="d-flex pb-2">
+                <input class="form-control" style="width: calc(100% - 85px); margin-top: 10px;"
+                    (change)="onFindVoucher($event)" />
+                <button class="btn btn-primary" [disabled]="nameVoucher?false:true" (click)="handleUseVoucher()"
+                    style="margin-top: 10px; background-color: black; color: #fff; font-weight: 500;width: 90px;">
+                    Áp dụng
+                </button>
+            </div>
+            <div class="d-flex justify-content-between pb-2">
+                <small style="color: red;">{{error}}</small>
+                <div></div>
+            </div>
+            <div class="d-flex justify-content-between pb-2">
+                <small class="text-muted">Giảm giá</small>
+                <p>{{discount| currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</p>
+            </div>
+            <div class="d-flex justify-content-between pb-2">
+                <small class="text-muted">Khách phải trả</small>
+                <p>{{tongtien| currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center pb-2">
+                <small class="text-muted">Tiền khách đưa</small>
+                <input type="text" class="form-control" style="width: calc(100% - 155px)"
+                    (change)="onChangePayMoney($event)" />
+            </div>
+            <div class="d-flex justify-content-between pb-2">
+                <small class="text-muted">Tiền thừa</small>
+                <p>{{change| currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</p>
+            </div>
+        </div>
+        <div class="d-flex align-items-center pb-2"><button type="button" class="btn btn-primary"
+                [disabled]="cartProductsByPayment.length==0?true:false" (click)="onConfirmOrder()">Thanh Toán</button>
+            <div><input type="checkbox" value="" id="flexCheckDefault"><label class="form-check-label"
+                    for="defaultCheck1">
+                    In hóa đơn
+                </label></div>
+        </div>
+    </div>
+</div>

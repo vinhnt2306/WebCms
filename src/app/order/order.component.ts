@@ -11,7 +11,7 @@ type comboStatus = {
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent {
-  constructor(public orderServices: OrderServices) {}
+  constructor(public orderServices: OrderServices) { }
   order: Order = new Order();
   comboStatus: comboStatus[] = [];
   lstOrder: Order[] = [];
@@ -76,20 +76,19 @@ export class OrderComponent {
       case 0:
         return '<div >Chờ duyệt</div>';
       case 1:
-        return '<div >Đã phê duyêt</div>';
+        return '<div >Chuẩn bị hàng</div>';
       case 2:
-        return '<div>Từ chối</div>';
+        return '<div>Gửi hàng</div>';
       case 3:
-        return '<div>Đang giao hàng</div>';
-
+        return '<div>Đã hủy đơn</div>';
       case 4:
-        return '<div>Đang trên đường giao tới khách hàng</div>';
+        return '<div>Trả hàng </div>';
       case 5:
-        return '<div>Khách hàng đã nhận hàng</div>';
+        return '<div>Trả hàng 1 phần</div>';
       case 6:
-        return '<div>Khách hàng hủy đơn hàng</div>';
+        return '<div>Hóa đơn mới tạo, trong thời gian đổi trả.</div>';
       case 7:
-        return '<div>Khách hàng từ chối nhận hàng</div>';
+        return '<div>Giao thành công</div>';
       default:
         return '<div>Khách hàng không nhận hàng</div>';
     }
@@ -106,13 +105,13 @@ export class OrderComponent {
       case 3:
         return 'yellow';
       case 4:
-        return 'yellow';
+        return 'red';
       case 5:
         return 'purple';
       case 6:
         return 'black';
       case 7:
-        return 'red';
+        return 'green';
       default:
         return 'red';
     }
@@ -130,6 +129,10 @@ export class OrderComponent {
       });
   }
 
+  onChangeStatus() {
+    console.log(this.idStatus);
+    console.log(this.idOrder);
+  }
   handleUpdateTrangThai(status: number, id: string) {
     this.orderServices.updateStatus(id, status, 'ok').subscribe((data: any) => {
       this.orderServices.getListOrder().subscribe((response: any) => {
@@ -137,5 +140,24 @@ export class OrderComponent {
         alert('Cập nhật trạng thái thành công');
       });
     });
+  }
+  Giaohang(id: any) {
+
+  }
+  createOderGHN(orderId: string) {
+    this.orderServices.OderGNH(orderId).subscribe(data => {
+      console.log(data);
+      if (data.status == "200") {
+        alert(data.messages)
+        console.log(data.messages)
+      } else {
+        alert(data.messages)
+        console.log(data.messages)
+      }
+    },
+      error => {
+        console.error('Lỗi', error);
+      }
+    );
   }
 }

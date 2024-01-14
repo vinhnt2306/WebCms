@@ -1,16 +1,32 @@
-export class  Product {
-  "id" : string;
+export class Product {
+  "id": string;
   "name": string;
-  "code":string;
+  "code": string;
   "price": number | null;
   "quantity": number | null;
   "status": number | null;
   "description": string;
   "priceNet": number | null;
-  "UrlImage" : string;
-  "image":string;
+  "UrlImage": string;
+  "image": string;
   "CategoryId": string;
-  "token" : string;
+  "token": string;
+  "TypeImage": string;
+}
+
+export class ProductUpdate {
+  "iD": string;
+  "name": string;
+  "code": string;
+  "price": number | null;
+  "quantity": number | null;
+  "status": number | null;
+  "description": string;
+  "priceNet": number | null;
+  "UrlImage": string;
+  "image": string;
+  "CategoryId": string;
+  "token": string;
   "TypeImage": string;
 }
 

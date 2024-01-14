@@ -1,6 +1,6 @@
-import { Component,Input ,OnInit,ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ProductService } from '../service/product.service';
-import { Product } from 'src/core/product';
+import { Product, ProductUpdate } from 'src/core/product';
 import { Category } from 'src/core/category';
 import { CartegoryService } from '../service/cartegory.service';
 
@@ -13,7 +13,7 @@ export class ProductComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   //nhập product
   @Input()
-  product : Product = new Product();
+  product: Product = new Product();
 
   products: Product[] = [];
 
@@ -22,16 +22,16 @@ export class ProductComponent implements OnInit {
   selectedFile: File | null = null;
   api_key = '284335524597493';
   upload_preset = 'vanh2204';
-  public_id : string = '';
+  public_id: string = '';
   secure_url: string | undefined;
   //
   constructor(
     public productService: ProductService,
-    public categortService : CartegoryService
-  ){}
+    public categortService: CartegoryService
+  ) { }
 
   ngOnInit() {
-      this.productService.getListProduct().subscribe((response: any) => {
+    this.productService.getListProduct().subscribe((response: any) => {
       this.products = response.data.lstProduct
     })
     this.categortService.getListCategory().subscribe((response: any) => {
@@ -39,16 +39,28 @@ export class ProductComponent implements OnInit {
     })
   }
   //lưu sản phẩm
-  saveProduct(){
-    this.productService.createProduct(this.product).subscribe(data =>{
-      this.productService.getListProduct().subscribe((response: any) => {
-        this.products = response.data.lstProduct
-      })
-    },
-    error => console.log(error));
+  saveProduct() {
+
+    if (this.product.id) {
+      let productupdate: ProductUpdate = { ...this.product, iD: this.product.id }
+      this.productService.updateProduct(productupdate).subscribe(data => {
+        this.productService.getListProduct().subscribe((response: any) => {
+          this.products = response.data.lstProduct
+        })
+      },
+        error => console.log(error));
+    } else {
+      this.productService.createProduct(this.product).subscribe(data => {
+        this.productService.getListProduct().subscribe((response: any) => {
+          this.products = response.data.lstProduct
+        })
+      },
+        error => console.log(error));
+    }
+
   }
   //submit save
-  onSubmit(){
+  onSubmit() {
     console.log(this.product);
     this.saveProduct();
     this.clearFormData();
@@ -58,39 +70,48 @@ export class ProductComponent implements OnInit {
     this.selectedFile = event.target.files[0];
 
     const formData = new FormData();
-      formData.append('file',event.target.files[0], event.target.files[0].name);
-      formData.append('api_key', this.api_key);
-      formData.append('upload_preset', this.upload_preset);
-      formData.append('imageName', this.public_id);
-      console.log(formData)
-      this.productService.upLoadImage(formData).subscribe((response:any) => {
-        console.log('Image uploaded successfully: URL', response.secure_url);
-        this.setImageUrl(response.secure_url);
-      },
+    formData.append('file', event.target.files[0], event.target.files[0].name);
+    formData.append('api_key', this.api_key);
+    formData.append('upload_preset', this.upload_preset);
+    formData.append('imageName', this.public_id);
+    console.log(formData)
+    this.productService.upLoadImage(formData).subscribe((response: any) => {
+      console.log('Image uploaded successfully: URL', response.secure_url);
+      this.setImageUrl(response.secure_url);
+    },
       error => {
         console.error('Error uploading image:', error);
       });
   }
 
-  setImageUrl(image: any){
+  setImageUrl(image: any) {
     this.product.UrlImage = image
     console.log(image)
   }
 
+  handleUpdate(value: any) {
+    this.productService.getProductDetail(value.id).subscribe((response: any) => {
+      if (response) {
+        this.product = response.data
+        this.product.UrlImage = response.data.image
+      }
+    })
+  }
+
   clearFormData() {
     this.product = {
-      id : '',
+      id: '',
       name: '',
-      code:'',
+      code: '',
       price: null,
       quantity: null,
       status: null,
       description: '',
       priceNet: null,
-      UrlImage : '',
-      image:'',
+      UrlImage: '',
+      image: '',
       CategoryId: '',
-      token : '',
+      token: '',
       TypeImage: '',
     };
     if (this.fileInput) {
