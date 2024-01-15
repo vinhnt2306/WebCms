@@ -18,7 +18,7 @@ export class ProductComponent implements OnInit {
 
   products: Product[] = [];
   total = 1;
-  pageSize = 20;
+  pageSize = 10;
   loading = false;
   searchText: string = '';
   pageIndex = 1;
@@ -33,8 +33,9 @@ export class ProductComponent implements OnInit {
   constructor(
     public productService: ProductService,
     public categortService: CartegoryService,
+    private fb: FormBuilder
   ) { }
-
+  productForm!: FormGroup;
   ngOnInit() {
     this.productService.getListProduct().subscribe((response: any) => {
       this.products = response.data.lstProduct
@@ -43,7 +44,22 @@ export class ProductComponent implements OnInit {
     this.categortService.getListCategory().subscribe((response: any) => {
       this.categorys = response.data.lstCategory
     })
+
+    this.productForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100), Validators.pattern(/^[a-zA-Z0-9\s]+/)]],
+      code: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern(/^[a-zA-Z0-9 ]*$/)]],
+      description: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
+      price: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100), Validators.pattern(/^[0-9 ]*$/)]],
+      priceNet: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100), Validators.pattern(/^[0-9 ]*$/)]],
+      CategoryId: ['', Validators.required],
+      quantity: ['', [Validators.pattern('[1-9]*')]],
+      status: ['', Validators.required],
+      image: [''],
+      UrlImage: [''],
+    });
+    console.log(this.productForm.value)
   }
+  
 
   loadProductsSearch(reset: boolean = false): void {
     if (reset) {
@@ -53,7 +69,7 @@ export class ProductComponent implements OnInit {
     }
     this.loading = true;
     this.productService
-      .getListProductSearch(this.searchText, (this.pageIndex - 1) * 20, 20)
+      .getListProductSearch(this.searchText, (this.pageIndex - 1) * 10, 10)
       .subscribe((response: any) => {
         this.loading = false;
         this.total = response.data.totalCount;;
@@ -66,7 +82,6 @@ export class ProductComponent implements OnInit {
   saveProduct() {
     if (typeof this.product.UrlImage == "string") {
       this.product.UrlImage = [this.product.UrlImage]
-
     }
     if (this.product.id) {
       let productupdate: ProductUpdate = { ...this.product, iD: this.product.id }
@@ -77,7 +92,7 @@ export class ProductComponent implements OnInit {
       },
         error => console.log(error));
     } else {
-      this.productService.createProduct(this.product).subscribe(data => {
+      this.productService.createProduct(this.productForm.value).subscribe(data => {
         this.productService.getListProduct().subscribe((response: any) => {
           this.products = response.data.lstProduct
         })
@@ -86,12 +101,19 @@ export class ProductComponent implements OnInit {
     }
 
   }
+  ErrorMessage: string = '';
   //submit save
   onSubmit() {
-    console.log(this.product);
-    this.saveProduct();
-    if (!this.product.id) {
-      this.clearFormData();
+    // Kiểm tra xem form có hợp lệ không
+    if (this.productForm.valid) {
+      this.saveProduct();
+      if (!this.product.id) {
+        this.clearFormData();
+      }
+      console.log('Form submitted successfully!');
+    } else {
+      // Form không hợp lệ, hiển thị thông báo lỗi hoặc thực hiện các xử lý khác
+      this.ErrorMessage = 'Vui lòng nhập đúng định dạng';
     }
   }
   //chọn ảnh
@@ -107,15 +129,24 @@ export class ProductComponent implements OnInit {
     this.productService.upLoadImage(formData).subscribe((response: any) => {
       console.log('Image uploaded successfully: URL', response.secure_url);
       this.setImageUrl(response.secure_url);
+      this.setimage(response.url);
     },
       error => {
         console.error('Error uploading image:', error);
       });
   }
   //set url ảnh
+  // setImageUrl(image: any) {
+  //   this.product.UrlImage = image
+  //   console.log(image)
+  // }
   setImageUrl(image: any) {
-    this.product.UrlImage = image
-    console.log(image)
+    this.productForm.get('UrlImage')?.setValue(image);
+    console.log(image);
+  }
+  setimage(image: any) {
+    this.productForm.get('image')?.setValue(image);
+    console.log(image);
   }
 
   //Edit

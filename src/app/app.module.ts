@@ -25,6 +25,7 @@ import { FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NzTableModule,
     ReactiveFormsModule,
     NzMessageModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
+  
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

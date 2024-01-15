@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product, ProductUpdate } from 'src/core/product';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -58,9 +59,9 @@ export class ProductService {
     );
   }
   //tạo mới sản phẩm
-  createProduct(product: Product): Observable<any> {
+  createProduct(formData:FormData): Observable<any> {
     return this.httpClient.post(`${this.baseURL}/api/CreateProduct/Process`, {
-      ...product,
+      ...formData,
       token: JSON.parse(localStorage.getItem('currentUser') ?? '').data.token,
       TypeImage: '1',
     });

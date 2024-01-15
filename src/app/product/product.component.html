@@ -7,7 +7,6 @@
 
 </div>
 <!-- Button trigger modal -->
-
 <br>
 <br>
 <!-- Modal -->
@@ -19,122 +18,110 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
           <div class="container">
             <div class="row">
               <div class="col-md-6">
                 <div class="mb-6">
                   <label class="form-label">Tên sản phẩm</label>
-                  <input class="form-control" name="name" #name="ngModel" [(ngModel)]="product.name" type="text"
-                    placeholder="Tên sản phẩm" required minlength="4" maxlength="100" pattern="^[A-Za-z ].*"
-                    autocomplete="off">
-                  <div class="error-message" *ngIf="name.invalid && (name.dirty || name.touched)">
-                    <div *ngIf="name.errors?.['required']">Vui lòng được để trống</div>
-                    <div *ngIf="name.errors?.['minlength']">Tên phải dài ít nhất 3 ký tự</div>
-                    <div *ngIf="name.errors?.['maxlength']">Tên không quá 100 kí tự</div>
-                    <div *ngIf="name.errors?.['pattern']">Tên không nhập kí tự đặc biệt</div>
+                  <input class="form-control" formControlName="name" type="text" placeholder="Tên sản phẩm">
+                  <div class="error-message" *ngIf="productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched)">
+                    <div *ngIf="productForm.get('name')?.errors?.['required']">Vui lòng được để trống</div>
+                    <div *ngIf="productForm.get('name')?.errors?.['minlength']">Tên phải dài ít nhất 3 ký tự</div>
+                    <div *ngIf="productForm.get('name')?.errors?.['maxlength']">Tên không quá 100 kí tự</div>
+                    <div *ngIf="productForm.get('name')?.errors?.['pattern']">Tên không hợp lệ</div>
                   </div>
                 </div>
                 <div class="mb-6">
                   <label class="form-label">Code</label>
-                  <input class="form-control" name="code" #code="ngModel" [(ngModel)]="product.code"
-                    placeholder="Nhập mã code" required minlength="4" maxlength="8" pattern="^[A-Za-z ].*"
-                    autocomplete="off">
-                  <div class="error-message" *ngIf="code.invalid && (code.dirty || code.touched)">
-                    <div *ngIf="code.errors?.['required']">Vui lòng được để trống</div>
-                    <div *ngIf="code.errors?.['minlength']">Code phải dài ít nhất 3 ký tự</div>
-                    <div *ngIf="code.errors?.['maxlength']">Code không quá 8 kí tự</div>
-                    <div *ngIf="code.errors?.['pattern']">Chỉ nhập chữ và số</div>
+                  <input class="form-control" formControlName="code" type="text" placeholder="Nhập mã code">
+                  <div class="error-message" *ngIf="productForm.get('code')?.invalid && (productForm.get('code')?.dirty || productForm.get('code')?.touched)">
+                    <div *ngIf="productForm.get('code')?.errors?.['required']">Vui lòng được để trống</div>
+                    <div *ngIf="productForm.get('code')?.errors?.['minlength']">Code phải dài ít nhất 4 ký tự</div>
+                    <div *ngIf="productForm.get('code')?.errors?.['maxlength']">Code không quá 8 kí tự</div>
+                    <div *ngIf="productForm.get('code')?.errors?.['pattern']">Chỉ nhập chữ và số</div>
                   </div>
                 </div>
                 <div class="mb-6">
                   <label class="form-label">Mô tả</label>
-                  <input class="form-control" name="description" #description="ngModel"
-                    [(ngModel)]="product.description" placeholder="Nhập mô tả sản phẩm" required minlength="4"
-                    maxlength="100" pattern="/^[a-zA-Z0-9 ]*$/" autocomplete="off">
-                  <div class="error-message" *ngIf="description.invalid && (description.dirty || description.touched)">
-                    <div *ngIf="description.errors?.['required']">Vui lòng được để trống</div>
-                    <div *ngIf="description.errors?.['minlength']">Mô tả phải dài ít nhất 3 ký tự</div>
-                    <div *ngIf="description.errors?.['maxlength']">Mô tả không quá 100 kí tự</div>
-                    <div *ngIf="description.errors?.['pattern']">Chỉ nhập số</div>
+                  <input class="form-control" formControlName="description" type="text" placeholder="Nhập mô tả sản phẩm">
+                  <div class="error-message" *ngIf="productForm.get('description')?.invalid && (productForm.get('description')?.dirty || productForm.get('description')?.touched)">
+                    <div *ngIf="productForm.get('description')?.errors?.['required']">Vui lòng được để trống</div>
+                    <div *ngIf="productForm.get('description')?.errors?.['minlength']">Mô tả phải dài ít nhất 4 ký tự</div>
+                    <div *ngIf="productForm.get('description')?.errors?.['maxlength']">Mô tả không quá 100 kí tự</div>
                   </div>
                 </div>
                 <div class="mb-6">
                   <label class="form-label">Giá</label>
-                  <input type="text" class="form-control" name="price" #price="ngModel" [(ngModel)]="product.price"
-                    required minlength="4" maxlength="100" pattern="/^[a-zA-Z0-9 ]*$/" autocomplete="off"
-                    inputmode="numeric" pattern="[0-9]*">
-                  <div class="error-message" *ngIf="price.invalid && (price.dirty || price.touched)">
-                    <div *ngIf="price.errors?.['required']">Vui lòng được để trống</div>
-                    <div *ngIf="price.errors?.['minlength']">Giá phải dài ít nhất 3 số</div>
-                    <div *ngIf="price.errors?.['maxlength']">Giá không quá 100 số</div>
-                    <div *ngIf="price.errors?.['pattern']">Giá không đúng định dạng</div>
+                  <input class="form-control" formControlName="price" type="number" placeholder="Nhập giá VND">
+                  <div class="error-message" *ngIf="productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched)">
+                    <div *ngIf="productForm.get('price')?.errors?.['required']">Vui lòng được để trống</div>
+                    <div *ngIf="productForm.get('price')?.errors?.['minlength']">Giá phải dài ít nhất 4 số</div>
+                    <div *ngIf="productForm.get('price')?.errors?.['maxlength']">Giá không quá 100 số</div>
+                    <div *ngIf="productForm.get('price')?.errors?.['pattern']">Giá nhập không đúng định dạng</div>
                   </div>
                 </div>
                 <div class="mb-6">
                   <label class="form-label">Giá Nhập</label>
-                  <input type="number" class="form-control" name="priceNet" #priceNet="ngModel"
-                    [(ngModel)]="product.priceNet" required minlength="4" maxlength="100" pattern="/^[a-zA-Z0-9 ]*$/"
-                    autocomplete="off" inputmode="numeric" pattern="[0-9]*">
-                  <div class="error-message" *ngIf="priceNet.invalid && (priceNet.dirty || priceNet.touched)">
-                    <div *ngIf="priceNet.errors?.['required']">Vui lòng được để trống</div>
-                    <div *ngIf="priceNet.errors?.['minlength']">Giá phải dài ít nhất 3 số</div>
-                    <div *ngIf="priceNet.errors?.['maxlength']">Giá không quá 100 số</div>
-                    <div *ngIf="priceNet.errors?.['pattern']">Giá không đúng định dạng</div>
+                  <input class="form-control" formControlName="priceNet" type="number" placeholder="Nhập giá nhập">
+                  <div class="error-message" *ngIf="productForm.get('priceNet')?.invalid && (productForm.get('priceNet')?.dirty || productForm.get('priceNet')?.touched)">
+                    <div *ngIf="productForm.get('priceNet')?.errors?.['required']">Vui lòng được để trống</div>
+                    <div *ngIf="productForm.get('priceNet')?.errors?.['minlength']">Giá nhập phải dài ít nhất 4 số</div>
+                    <div *ngIf="productForm.get('priceNet')?.errors?.['maxlength']">Giá nhập không quá 100 số</div>
+                    <div *ngIf="productForm.get('priceNet')?.errors?.['pattern']">Giá nhập không đúng định dạng</div>
                   </div>
                 </div>
                 <div class="mb-6">
                   <label class="form-label">Danh mục</label>
-                  <select class="form-select" name="cars" id="cars" [(ngModel)]="product.CategoryId" required
-                    #category="ngModel">
-                    <option *ngFor="let cate of categorys" [value]="cate.id">
-                      {{cate.name}}
-                    </option>
+                  <select class="form-select" formControlName="CategoryId">
+                    <option *ngFor="let cate of categorys" [value]="cate.id">{{cate.name}}</option>
                   </select>
-                  <div *ngIf="category.invalid && (category.dirty || category.touched)" class="text-danger">
+                  <div class="error-message" *ngIf="productForm.get('CategoryId')?.invalid && (productForm.get('CategoryId')?.dirty || productForm.get('CategoryId')?.touched)">
                     Trường này không được để trống.
                   </div>
                 </div>
                 <div class="mb-6">
                   <label class="form-label">Số lượng</label>
-                  <input type="number" class="form-control" name="quantity" #quantity="ngModel"
-                    [(ngModel)]="product.quantity">
+                  <input class="form-control" formControlName="quantity" type="number" placeholder="Nhập số lượng" pattern="[1-9]*">
+                  <div class="error-message" *ngIf="productForm.get('quantity')?.invalid && (productForm.get('quantity')?.dirty || productForm.get('quantity')?.touched)">
+                    <div *ngIf="productForm.get('quantity')?.errors?.['pattern']">Không được nhập số âm</div>
+                  </div>
                 </div>
-
                 <br>
               </div>
               <div class="col-md-6">
-                <!-- <div class="mb-6">
-                  <label class="form-label">Trạng thái</label>
-                  <input type="number" class="form-control" name="status" #status="ngModel"
-                    [(ngModel)]="product.status">
-                </div> -->
                 <div class="mb-6">
                   <label class="form-label">Trạng thái</label>
-                  <select class="form-select" name="status" #status="ngModel" [(ngModel)]="product.status">
+                  <select class="form-select" formControlName="status">
                     <option value="1">Hoạt động 1</option>
                     <option value="2">Ngừng Hoạt động 2</option>
                   </select>
+                  <div class="error-message" *ngIf="productForm.get('status')?.invalid && (productForm.get('status')?.dirty || productForm.get('status')?.touched)">
+                    <!-- Thêm các thông báo lỗi tương tự như các trường trước (nếu cần) -->
+                  </div>
                 </div>
+                
                 <div class="mb-6">
                   <label class="form-label">Select Image</label>
-                  <input type="file" #fileInput (change)="onFileSelected($event)" class="form-control" name="image">
+                  <input type="file" (change)="onFileSelected($event)">
                 </div>
+                
                 <div class="mb-6">
                   <label class="form-label">UrlImages</label>
-                  <input type="text" class="form-control" name="image" #image="ngModel" [(ngModel)]="product.UrlImage"
-                    disabled>
+                  <input type="text" class="form-control" formControlName="UrlImage">
                   <h2>image</h2>
-                  <img [src]="[product.UrlImage]" alt="" height="200px" width="200px">
+                  <img [src]="productForm.get('UrlImage')?.value" alt="" height="200px" width="200px">
                 </div>
+                
               </div>
             </div>
           </div>
 
-
-
-
+          
           <div class="modal-footer">
+            <div *ngIf="ErrorMessage" class="error-message">
+              {{ ErrorMessage }}
+            </div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save Product</button>
           </div>
@@ -143,6 +130,14 @@
     </div>
   </div>
 </div>
+<div class="input-group" style="max-width: 300px;">
+  <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Tìm kiếm sản phẩm"
+      aria-label="Search" aria-describedby="searchButton" (input)="loadProductsSearch()">
+  <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" id="searchButton">Tìm kiếm</button>
+  </div>
+</div>
+<br>
 <h1>Danh sách sản phẩm</h1>
 <!-- <table class="table align-middle mb-0 bg-white">
   <thead class="bg-light">
@@ -197,7 +192,7 @@
   <tbody>
     <tr *ngFor="let pd of basicTable.data;index as i">
       <td>#{{i+1}}</td>
-      <td>{{pd.name}}</td>
+      <td style="font-weight: 700;">{{pd.name}}</td>
       <td>{{pd.description}}</td>
       <td>{{pd.price | currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</td>
       <td>{{pd.priceNet | currency:'VND': 'symbol':'1.0-0' | slice: 1}}đ</td>
