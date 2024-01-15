@@ -3,6 +3,7 @@ import { Product } from 'src/core/product';
 import { ProductService } from '../service/product.service';
 import { CartegoryService } from '../service/cartegory.service';
 import { OrderServices } from '../service/order.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-buyadmin',
   templateUrl: './buyadmin.component.html',
@@ -12,9 +13,12 @@ export class BuyadminComponent {
   @Input() product!: Product;
   products: Product[] = [];
   pdSearch: Product[] = [];
-  pageSize = 25;
+  pageSize = 5;
   page = 4;
   sum = 0;
+  total = 1;
+  loading = false;
+  searchGenderList: string[] = [];
   tongtien = 0;
   discount = 0;
   getListPayment: any[] = [];
@@ -24,8 +28,10 @@ export class BuyadminComponent {
   getListVouncher: any[] = [];
   orderResponse: any;
   change = 0;
+  totalItems = 0;
   numberOfProduct = 0;
   searchText: string = '';
+  pageIndex = 1;
   cartProducts: any;
   productDetail: Product = new Product();
   cartProductsByPayment: any[] = []; //sản phẩm trong giỏ hàng CartItem
@@ -33,8 +39,9 @@ export class BuyadminComponent {
   constructor(
     private productService: ProductService,
     private cartService: CartegoryService,
-    private oderService: OrderServices
-  ) {}
+    private oderService: OrderServices,
+    private message: NzMessageService
+  ) { }
   ngOnInit(): void {
     var lstCart: any = [];
 
@@ -62,18 +69,38 @@ export class BuyadminComponent {
     }, 5000);
   }
   loadProducts(): void {
-    this.productService.getListProduct().subscribe((response: any) => {
+    this.productService.getListProduct2().subscribe((response: any) => {
       this.products = response.data.lstProduct;
-      console.log(this.products);
+      this.totalItems = response.data.totalCount;
+      this.total = response.data.totalCount;
     });
   }
-  loadProductsSearch(): void {
+  loadProductsSearch(reset: boolean = false): void {
+    if (reset) {
+      this.pageIndex = 1;
+    } else {
+
+    }
+    this.loading = true;
     this.productService
-      .getListProductSearch(this.searchText)
+      .getListProductSearch(this.searchText, (this.pageIndex - 1) * 5, 5)
       .subscribe((response: any) => {
+        this.loading = false;
+        this.total = response.data.totalCount;;
         this.products = response.data.lstProduct;
-        console.log(this.products);
+        console.log('total', this.total)
       });
+  }
+
+  onPageChange(pageIndex: number): void {
+    this.pageIndex = pageIndex;
+    this.updatePagedData();
+  }
+
+  updatePagedData(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.products = this.products.slice(startIndex, endIndex);
   }
   addToCartProduct(productId: string, quantity: number) {
     this.productService.addToCart(productId, quantity, true).subscribe(
@@ -132,6 +159,7 @@ export class BuyadminComponent {
         this.sum = response.data.cartItem.reduce((next: any, prev: any) => {
           return next + prev.price * prev.quantity;
         }, 0);
+        this.ConfirmOder();
       });
       this.status = false;
     });
@@ -168,13 +196,18 @@ export class BuyadminComponent {
       )
       .subscribe((data) => {
         this.orderResponse = data.data;
-        if (data.data) {
-          this.tongtien = data.data.totalAmount ? data.data.totalAmount : 0;
-          let result = this.getListVouncher.find(
-            (x: any) => x.code === this.nameVoucher && x.type == 'discount'
-          );
-          this.discount = data.data.totalAmountDiscount;
-          this.tongtien = data.data.totalAmount;
+        console.log(data.data)
+        if (data.status == "200") {
+          if (data.data) {
+            this.tongtien = data.data.totalAmount ? data.data.totalAmount : 0;
+            let result = this.getListVouncher.find(
+              (x: any) => x.code === this.nameVoucher && x.type == 'discount'
+            );
+            this.discount = data.data.totalAmountDiscount;
+            this.tongtien = data.data.totalAmount;
+          }
+        } else {
+          this.message.warning(data.messages[0].messageText);
         }
       });
   }

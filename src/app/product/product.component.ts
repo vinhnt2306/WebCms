@@ -3,6 +3,7 @@ import { ProductService } from '../service/product.service';
 import { Product, ProductUpdate } from 'src/core/product';
 import { Category } from 'src/core/category';
 import { CartegoryService } from '../service/cartegory.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product',
@@ -16,7 +17,11 @@ export class ProductComponent implements OnInit {
   product: Product = new Product();
 
   products: Product[] = [];
-
+  total = 1;
+  pageSize = 20;
+  loading = false;
+  searchText: string = '';
+  pageIndex = 1;
   categorys: Category[] = [];
   //upload ảnh
   selectedFile: File | null = null;
@@ -27,20 +32,42 @@ export class ProductComponent implements OnInit {
   //
   constructor(
     public productService: ProductService,
-    public categortService: CartegoryService
+    public categortService: CartegoryService,
   ) { }
 
   ngOnInit() {
     this.productService.getListProduct().subscribe((response: any) => {
       this.products = response.data.lstProduct
+      this.total = response.data.totalCount;
     })
     this.categortService.getListCategory().subscribe((response: any) => {
       this.categorys = response.data.lstCategory
     })
   }
+
+  loadProductsSearch(reset: boolean = false): void {
+    if (reset) {
+      this.pageIndex = 1;
+    } else {
+
+    }
+    this.loading = true;
+    this.productService
+      .getListProductSearch(this.searchText, (this.pageIndex - 1) * 20, 20)
+      .subscribe((response: any) => {
+        this.loading = false;
+        this.total = response.data.totalCount;;
+        this.products = response.data.lstProduct;
+        console.log('total', this.total)
+      });
+  }
+
   //lưu sản phẩm
   saveProduct() {
+    if (typeof this.product.UrlImage == "string") {
+      this.product.UrlImage = [this.product.UrlImage]
 
+    }
     if (this.product.id) {
       let productupdate: ProductUpdate = { ...this.product, iD: this.product.id }
       this.productService.updateProduct(productupdate).subscribe(data => {
@@ -63,7 +90,9 @@ export class ProductComponent implements OnInit {
   onSubmit() {
     console.log(this.product);
     this.saveProduct();
-    this.clearFormData();
+    if (!this.product.id) {
+      this.clearFormData();
+    }
   }
   //chọn ảnh
   onFileSelected(event: any) {
@@ -83,21 +112,36 @@ export class ProductComponent implements OnInit {
         console.error('Error uploading image:', error);
       });
   }
-
+  //set url ảnh
   setImageUrl(image: any) {
     this.product.UrlImage = image
     console.log(image)
   }
 
+  //Edit
   handleUpdate(value: any) {
     this.productService.getProductDetail(value.id).subscribe((response: any) => {
       if (response) {
-        this.product = response.data
-        this.product.UrlImage = response.data.image
+        this.product = {
+          id: response.data.id,
+          code: response.data.code,
+          description: response.data.description,
+          name: response.data.name,
+          image: response.data.image[0],
+          quantity: response.data.quantity,
+          price: response.data.price,
+          priceNet: response.data.priceNet,
+          status: response.data.status,
+          UrlImage: response.data.image[0],
+          TypeImage: response.data.TypeImage,
+          CategoryId: response.data.categoryId,
+          token: ''
+        }
+        console.log(this.product)
       }
     })
   }
-
+  //xoá dữ liệu form
   clearFormData() {
     this.product = {
       id: '',
@@ -118,5 +162,4 @@ export class ProductComponent implements OnInit {
       this.fileInput.nativeElement.value = '';
     }
   }
-
 }

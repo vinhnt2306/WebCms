@@ -20,11 +20,6 @@ body {
     font-size: 17px;
     margin-top: 20px;
 }
-
-.type {
-    /* padding-left: px; */
-}
-
 .header {
     display: flex;
     align-items: center;

@@ -9,7 +9,7 @@ import { Product, ProductUpdate } from 'src/core/product';
 export class ProductService {
   private baseURL = 'https://localhost:44383';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   //get product
   getListProduct(): Observable<any> {
@@ -26,9 +26,26 @@ export class ProductService {
       }
     );
   }
-  getListProductSearch(searchText: string): Observable<any> {
+  getListProduct2(): Observable<any> {
+    const data = {
+      limit: 5,
+      offSet: 0
+    };
+    return this.httpClient.request(
+      'POST',
+      `${this.baseURL}/api/HomePage/Process`,
+      {
+        body: data,
+        observe: 'body',
+        responseType: 'json',
+      }
+    );
+  }
+  getListProductSearch(searchText: string, offSet: number, limit: number): Observable<any> {
     const data = {
       name: searchText,
+      limit: limit,
+      offSet: offSet
     };
     return this.httpClient.request(
       'POST',
@@ -48,6 +65,7 @@ export class ProductService {
       TypeImage: '1',
     });
   }
+  //sửa sản phẩm
   updateProduct(product: ProductUpdate): Observable<any> {
     return this.httpClient.post(`${this.baseURL}/api/EditProduct/Process`, {
       ...product,

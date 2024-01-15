@@ -21,6 +21,10 @@ import { UserComponent } from './user/user.component';
 import { BuyadminComponent } from './buyadmin/buyadmin.component';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { FormGroup } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,8 +50,11 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     HttpClientModule,
     FormsModule,
     NzTableModule,
+    ReactiveFormsModule,
+    NzMessageModule,
+    BrowserAnimationsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
